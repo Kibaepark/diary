@@ -4,17 +4,23 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
+
+import com.kakao.auth.AuthType;
+import com.kakao.auth.Session;
+import com.kakao.usermgmt.LoginButton;
 
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 public class KakaoLoginActivity extends AppCompatActivity {
     private Context mContext;
+
+    private LoginButton btn_kakao_login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +29,17 @@ public class KakaoLoginActivity extends AppCompatActivity {
         mContext = getApplicationContext();
 
         getHashKey(mContext);
+        btn_kakao_login = (LoginButton) findViewById(R.id.com_kakao_login);
+        btn_kakao_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Session session = Session.getCurrentSession();
+
+                session.addCallback(new SessionCallBack());
+
+                session.open(AuthType.KAKAO_LOGIN_ALL, KakaoLoginActivity.this);
+            }
+        });
     }
 
     // 프로젝트의 해시키를 반환
