@@ -4,4 +4,6 @@
     <string name="일기쓰기">일기쓰기</string>
     <string name="ㅄ">ㅄ</string>
     <string name="ㅅㅂ">ㅅㅂ</string>
+    //카카오 앱 키
+    <string name="kakao_app_key">0abfa6a9ec2b3e41c6dcffacf7b6f0fb</string>
 </resources>

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.ki.a10_25">
 
+    <!--인터넷 사용 권한-->
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,20 +11,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!--카카오톡 메타데이터-->
+        <meta-data
+            android:name="com.kakao.sdk.AppKEY"
+            android:value="@string/kakao_app_key"/>
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-                +
-                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs that begin with "java-lang-programming://android-app-google-plus-demo" -->
-                <data
-                    android:host="java-lang-programming"
-                    android:scheme="android-app-google-plus-demo" />
             </intent-filter>
         </activity>
         <activity android:name=".Main3Activity" />
