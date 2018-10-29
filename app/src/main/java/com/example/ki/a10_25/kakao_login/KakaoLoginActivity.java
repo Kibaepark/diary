@@ -188,9 +188,6 @@ public class KakaoLoginActivity extends AppCompatActivity {
             });
 
         }
-
-
-
     }
     protected JSONObject makeJson(){
         JSONObject jsonObject = new JSONObject();
