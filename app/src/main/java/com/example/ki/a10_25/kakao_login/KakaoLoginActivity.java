@@ -104,6 +104,7 @@ public class KakaoLoginActivity extends AppCompatActivity {
         final Intent intent = new Intent(this, MainActivity.class);
         json=makeJson();
         intent.putExtra("user",json.toString());
+        intent.putExtra("id",id);
         startActivity(intent);
         finish();
     }
@@ -112,14 +113,10 @@ public class KakaoLoginActivity extends AppCompatActivity {
     private long id;
 
     private class SessionCallback implements ISessionCallback {
-
-
         @Override
         public void onSessionOpened() {
             requestMe();
-
         }
-
         @Override
         public void onSessionOpenFailed(KakaoException exception) {
             if(exception != null) {
@@ -129,9 +126,7 @@ public class KakaoLoginActivity extends AppCompatActivity {
         // 사용자 정보 요청
 
         public void requestMe() {
-
             // 사용자정보 요청 결과에 대한 Callback
-
             UserManagement.requestMe(new MeResponseCallback() {
 
                 // 세션 오픈 실패. 세션이 삭제된 경우,
@@ -143,9 +138,6 @@ public class KakaoLoginActivity extends AppCompatActivity {
                     Log.e("SessionCallback :: ", "onSessionClosed : " + errorResult.getErrorMessage());
 
                 }
-
-
-
                 // 회원이 아닌 경우,
 
                 @Override
@@ -163,7 +155,6 @@ public class KakaoLoginActivity extends AppCompatActivity {
                 @Override
 
                 public void onSuccess(UserProfile userProfile) {
-                    redirectSignupActivity();
                     Log.e("SessionCallback :: ", "onSuccess");
                     nickName = userProfile.getNickname();
 //                    String email = userProfile.getEmail();

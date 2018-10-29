@@ -11,7 +11,8 @@
         android:roundIcon="@drawable/app_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name=".kakao_login.GlobalApplication">
+        android:name=".kakao_login.GlobalApplication"
+        android:usesCleartextTraffic="true">
 
         <!--카카오톡 메타데이터-->
         <meta-data
@@ -21,8 +22,8 @@
         <activity android:name=".MainActivity">
 
         </activity>
-        <activity android:name=".Main3Activity" />
-        <activity android:name=".Main2Activity" />
+        <activity android:name=".diaryWriteActivity" />
+        <activity android:name=".diaryReadActivity" />
         <activity android:name=".kakao_login.KakaoLoginActivity" android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
