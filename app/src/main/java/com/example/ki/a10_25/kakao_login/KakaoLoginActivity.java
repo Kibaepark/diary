@@ -1,17 +1,18 @@
-package com.example.ki.a10_25;
+package com.example.ki.a10_25.kakao_login;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 
+import com.example.ki.a10_25.MainActivity;
+import com.example.ki.a10_25.R;
 import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
@@ -44,6 +45,7 @@ public class KakaoLoginActivity extends AppCompatActivity {
     private Context mContext;
     private SessionCallback callback;
     private LoginButton btn_kakao_login;
+    private JSONObject json;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -100,6 +102,8 @@ public class KakaoLoginActivity extends AppCompatActivity {
     }
     protected void redirectSignupActivity() {
         final Intent intent = new Intent(this, MainActivity.class);
+        json=makeJson();
+        intent.putExtra("user",json.toString());
         startActivity(intent);
         finish();
     }

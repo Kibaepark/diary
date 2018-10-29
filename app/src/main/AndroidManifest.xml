@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name=".GlobalApplication">
+        android:name=".kakao_login.GlobalApplication">
 
         <!--카카오톡 메타데이터-->
         <meta-data
@@ -23,7 +23,7 @@
         </activity>
         <activity android:name=".Main3Activity" />
         <activity android:name=".Main2Activity" />
-        <activity android:name=".KakaoLoginActivity" android:theme="@style/Theme.AppCompat.NoActionBar">
+        <activity android:name=".kakao_login.KakaoLoginActivity" android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
