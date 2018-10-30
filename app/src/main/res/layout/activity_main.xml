@@ -1,38 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:contentDescription="@string/app_name"
-    tools:context=".MainActivity">
+    tools:showIn="@layout/activity_main">
 
-    <LinearLayout
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="fill_horizontal"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
+        app:layout_constraintBottom_toBottomOf="@id/content_main"/>
 
-        <DatePicker
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/datePicker"
-            android:layout_marginTop="15sp"/>
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/button1"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/일기보기" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/일기쓰기" />
-
-</LinearLayout>
+        app:layout_constraintTop_toTopOf="@id/content_main"/>
+</android.support.constraint.ConstraintLayout>
