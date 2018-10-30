@@ -53,8 +53,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         button2.setOnClickListener(this);
         select.setOnClickListener(this);
         cal=Calendar.getInstance();
-        dpd=new DatePickerDialog(getActivity(),listener, cal.get(cal.YEAR), cal.get(cal.MONTH) + 1, cal.get(cal.DATE));
+        int y,m,d;
+        y=cal.get(Calendar.YEAR);
+        m=cal.get(Calendar.MONTH);
+        d=cal.get(Calendar.DAY_OF_MONTH);
+        dpd=new DatePickerDialog(getActivity(),listener,y, m,d);
         result="";
+        
     }
     private DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
 
@@ -62,12 +67,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
-            result=year+"-"+monthOfYear+"-"+dayOfMonth;
+            setResult(year+"-"+(monthOfYear+1)+"-"+dayOfMonth);
             setButtonVisible();
-
         }
-
-
     };
 
     @Override
@@ -83,8 +85,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         if(v.getId()==R.id.select_date){
             // Show the date picker dialog fragment
             dpd.show();
-
-
         }
         if (v.getId()==R.id.button1){
             intent = new Intent(getActivity(), diaryReadActivity.class );
@@ -106,11 +106,4 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         button1.setVisibility(View.VISIBLE);
         button2.setVisibility(View.VISIBLE);
     }
-    public void setButtonGone(){
-        button1.setVisibility(View.GONE);
-        button2.setVisibility(View.GONE);
-    }
-
-
-
 }

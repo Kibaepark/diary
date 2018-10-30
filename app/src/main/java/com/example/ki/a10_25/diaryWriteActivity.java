@@ -36,8 +36,8 @@ public class diaryWriteActivity extends AppCompatActivity implements View.OnClic
 
     private String date;
     private TextView tw;
-    private EditText et;
-    private String str;
+    private EditText et,rId;
+    private String str,rec;
     private Button sendBtn;
     private Dialog dialog;
     private UserProfile userProfile;
@@ -53,11 +53,13 @@ public class diaryWriteActivity extends AppCompatActivity implements View.OnClic
         sendBtn=(Button)findViewById(R.id.send_btn);
         sendBtn.setOnClickListener(this);
         id=getIntent().getLongExtra("id",id);
+        rId=(EditText)findViewById(R.id.receiver_id);
         Log.e("id",Long.toString(id));
     }
     @Override
     public void onClick(View v) {
         str=et.getText().toString();
+        rec=rId.getText().toString();
         new AlertDialog.Builder(this)
                 .setTitle("일기작성완료")
                 .setMessage("전송하시겠습니까?")
@@ -91,19 +93,18 @@ public class diaryWriteActivity extends AppCompatActivity implements View.OnClic
         sendDiary= new HashMap<>();
             sendDiary.put("date", date);
             sendDiary.put("sender",id);
+            sendDiary.put("receiver",rec);
             sendDiary.put("sendData",str);
 
         Log.e("json",sendDiary.toString());
     }
 
     public class jsonSend extends AsyncTask<Void, Void,Void> {
-
-
         @Override
         protected Void doInBackground(Void... voids) {
             try {
 
-                String url = "http://192.168.0.15:3000/sendJson";
+                String url = "http://192.168.51.14:3000/sendJson";
                 URL obj = new URL(url);
                 HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
 
@@ -141,15 +142,11 @@ public class diaryWriteActivity extends AppCompatActivity implements View.OnClic
 
                     Log.i("하하하", "DATA response = " + response);
                 }
-
                 os.close();
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
             return null;
-
         }
     }
 }

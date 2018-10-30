@@ -1,6 +1,7 @@
 package com.example.ki.a10_25;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
@@ -20,8 +21,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     private TabLayout tabLayout;
-    private Fragment fragment;
-    private FragmentManager fragmentManager;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -31,8 +30,9 @@ public class MainActivity extends AppCompatActivity {
         PageAdapter pageAdapter=new PageAdapter(getSupportFragmentManager());
         ViewPager viewPager=(ViewPager)findViewById(R.id.view_pager);
         viewPager.setAdapter(pageAdapter);
-
-        TabLayout tabLayout=(TabLayout)findViewById(R.id.tabs);
+        tabLayout=(TabLayout)findViewById(R.id.tabs);
+        tabLayout.setTabTextColors(Color.GRAY,Color.rgb(54,46,43));
+        tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.colorPrimary));
         tabLayout.setupWithViewPager(viewPager);
      }
 }
