@@ -1,11 +1,17 @@
-package com.example.ki.a10_25;
+package com.example.ki.a10_25.FriendList;
 
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.example.ki.a10_25.HomeFragment;
+import com.example.ki.a10_25.MyFragment;
+
+import java.util.Map;
+
 public class PageAdapter extends FragmentPagerAdapter {
+
     public PageAdapter(FragmentManager fm) {
         super(fm);
     }

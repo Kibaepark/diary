@@ -9,39 +9,60 @@
     tools:context=".MainActivity">
 
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:hint="상대방의 id를 입력하세요"
-        android:id="@+id/receiver_id"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-        <TextView
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Spinner
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:text="@string/ㅅㅂ"
-            android:layout_weight="3"
-            android:id="@+id/text"/>
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="보내기"
-            android:textColor="@color/colorPrimary"
-            android:layout_margin="20dp"
-            android:background="@drawable/btn_bg"
-            android:id="@+id/send_btn"/>
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:id="@+id/weather"
+            android:padding="5dp"/>
+        <EditText
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:hint="오늘 기분은 어떤가요?"
+            android:id="@+id/fill"
+            android:textSize="15sp"
+            android:maxLines="1"/>
 
-    <EditText
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5"
-        android:hint="일기를 작성하세요"
-        android:imeOptions="actionDone"
-        android:id="@+id/write"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:maxLines="1"
+            android:hint="상대방의 id를 입력하세요"
+            android:gravity="center"
+            android:background="@null"
+            android:id="@+id/receiver_id"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:hint="일기를 작성해주세요. 입력하신 상대방에게 일기가 전송됩니다."
+            android:gravity="start"
+            android:padding="8dp"
+            android:id="@+id/diary"
+            android:background="@null"/>
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginBottom="8dp"
+            android:layout_gravity="center"
+            android:background="@drawable/btn_bg"
+            android:text="전송"
+            android:id="@+id/btn"/>
+    </LinearLayout>
 
 </LinearLayout>

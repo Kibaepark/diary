@@ -6,7 +6,16 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.ki.a10_25.Task.DiaryWithFriend;
+import com.example.ki.a10_25.Task.JsonResult;
+import com.example.ki.a10_25.Task.Url;
+import com.example.ki.a10_25.Task.readJson;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -15,108 +24,91 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.util.List;
-import java.util.Map;
+import java.util.ArrayList;
 
-import org.json.JSONException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-public class diaryReadActivity extends AppCompatActivity {
+public class diaryReadActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private String date;
-    private TextView tw,dd,s,r,d;
-    private long id;
+    private String day,main,feeling;
+    private TextView date,mainText,feel;
+    private ImageView weather;
+    private Button next, back;
+    private int i,wt,resource;
+    private ArrayList<DiaryWithFriend> diaryWithFriends;
+    private int[] image;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read);
-        id=getIntent().getLongExtra("id",id);
-        new readJson().execute();
-        date=getIntent().getStringExtra("date");
-        tw=(TextView)findViewById(R.id.text);
-        tw.setText(date);
-        dd=(TextView) findViewById(R.id.diary_date);
-        s=(TextView)findViewById(R.id.sender);
-        r=(TextView)findViewById(R.id.receiver);
-        d=(TextView)findViewById(R.id.diary);
-        Log.e("idd",Long.toString(getIntent().getLongExtra("id",id)));
+        initView();
+        initData(i);
+        setView();
+        initButton();
+    }
+    public void initView(){//view 속성 초기화
+       i=getIntent().getIntExtra("position",i);
+        image= new int[]{R.drawable.w1,R.drawable.w2, R.drawable.w3, R.drawable.w4,
+                R.drawable.w5,R.drawable.w6,R.drawable.w7,R.drawable.w8,
+                R.drawable.w9,R.drawable.w10, R.drawable.w11,R.drawable.w12,
+                R.drawable.w13,R.drawable.w14, R.drawable.w15,R.drawable.w16};
+       date=findViewById(R.id.date);
+       mainText=findViewById(R.id.main_text);
+       next=findViewById(R.id.next_btn);
+       back=findViewById(R.id.back_btn);
+       weather=findViewById(R.id.weather);
+       feel=findViewById(R.id.feel);
+    }
+
+    private void initData(int Position){
+        diaryWithFriends=JsonResult.getDiaryWithFriends();
+        day=diaryWithFriends.get(Position).getDate();
+        main=diaryWithFriends.get(Position).getMainText();
+        wt=Integer.parseInt(diaryWithFriends.get(Position).getWeather());
+        feeling=diaryWithFriends.get(Position).getHowru();
+        resource=image[wt];
+    }
+
+    private void setView(){  //textview에 data를 보여주도록 설정
+        date.setText(day);
+        mainText.setText(main);
+        weather.setImageResource(resource);
+        feel.setText(feeling);
+    }
+    private void initButton(){
+        next.setOnClickListener(this);
+        back.setOnClickListener(this);
     }
 
 
-    public class readJson extends AsyncTask<Void, Void, String> {
 
-        private String strUrl, result,date,sender,receiver,diary,strCookie;
-        private URL Url;
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            strUrl = "http://192.168.0.15:3000/receiveJson?id="+id;//탐색하고 싶은 URL이다.
-        }
-
-        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-        @Override
-        protected String doInBackground(Void... voids) {
-            try{
-                Url = new URL(strUrl); // URL화 한다.
-                HttpURLConnection conn = (HttpURLConnection) Url.openConnection(); // URL을 연결한 객체 생성.
-                conn.setRequestMethod("GET"); // get방식 통신
-                conn.setDoInput(true); // 읽기모드 지정
-                conn.setUseCaches(false); // 캐싱데이터를 받을지 안받을지
-                conn.setDefaultUseCaches(false); // 캐싱데이터 디폴트 값 설정
-
-                strCookie = conn.getHeaderField("Set-Cookie"); //쿠키데이터 보관
-
-                for (Map.Entry<String, List<String>> header : conn.getHeaderFields().entrySet()) {
-                    for (String value : header.getValue()) {
-                        System.out.println(header.getKey() + " : " + value);
-                    }
-                }
-                try (InputStream in = conn.getInputStream();
-                     ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-
-                    byte[] buf = new byte[1024 * 8];
-                    int length = 0;
-                    while ((length = in.read(buf)) != -1) {
-                        out.write(buf, 0, length);
-                    }
-                    result=new String(out.toByteArray(),"UTF-8");
-                    System.out.println(new String(out.toByteArray(), "UTF-8"));
-                }
-            }catch(MalformedURLException | ProtocolException exception) {
-                exception.printStackTrace();
-            }catch(IOException io){
-                io.printStackTrace();
-            }
-            return result;
-        }
-
-        @Override
-        protected void onPostExecute(String aVoid) {
-            super.onPostExecute(aVoid);
-            System.out.println(result);
-            JSONParser parser=new JSONParser();
-            try {
-                JSONObject jsonObject=(JSONObject)parser.parse(result);
-                date=jsonObject.get("date").toString();
-                receiver=jsonObject.get("receiver").toString();
-                diary=jsonObject.get("sendData").toString();
-                sender=jsonObject.get("sender").toString();
-                dd.setText(date);
-                s.setText(sender);
-                r.setText(receiver);
-                d.setText(diary);
-
-            } catch (ParseException e) {
-                e.printStackTrace();
+    @Override
+    public void onClick(View v) {
+        if(v.getId()==R.id.next_btn){
+            if(i==JsonResult.getDiaryWithFriends().size()-1){
+                Toast.makeText(this,"마지막 일기입니다.",Toast.LENGTH_SHORT).show();
+            }else {
+                i++;
+                initData(i);
+                setView();
             }
 
+
+        }else{
+            if(i==0){
+                Toast.makeText(this,"첫 일기입니다.",Toast.LENGTH_SHORT).show();
+            }else {
+                i--;
+                initData(i);
+                setView();
+            }
+
+
         }
-
-
-
     }
 }
 

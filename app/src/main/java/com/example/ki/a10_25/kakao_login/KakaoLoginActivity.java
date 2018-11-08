@@ -13,6 +13,9 @@ import android.util.Log;
 
 import com.example.ki.a10_25.MainActivity;
 import com.example.ki.a10_25.R;
+import com.example.ki.a10_25.Task.Url;
+import com.example.ki.a10_25.Task.jsonSend;
+import com.example.ki.a10_25.Task.UserVO;
 import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
@@ -24,28 +27,18 @@ import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
 
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
 import java.security.MessageDigest;
+import java.util.HashMap;
+import java.util.Map;
 
 public class KakaoLoginActivity extends AppCompatActivity {
     private Context mContext;
     private SessionCallback callback;
     private LoginButton btn_kakao_login;
     private JSONObject json;
+    Map<String,Object> jsonObject;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -102,15 +95,19 @@ public class KakaoLoginActivity extends AppCompatActivity {
     }
     protected void redirectSignupActivity() {
         final Intent intent = new Intent(this, MainActivity.class);
-        json=makeJson();
-        intent.putExtra("user",json.toString());
-        intent.putExtra("id",id);
+        makeJson();
+        new jsonSend(jsonObject,Url.getUrl()+"/user").execute();
+        UserVO.setId(id);
+        UserVO.setNick(nickName);
+        UserVO.setUrl(thumnailPath);
         startActivity(intent);
         finish();
     }
 
     private String nickName;
     private long id;
+    private String thumnailPath;
+    private String profileImagePath;
 
     private class SessionCallback implements ISessionCallback {
         @Override
@@ -158,12 +155,13 @@ public class KakaoLoginActivity extends AppCompatActivity {
                     Log.e("SessionCallback :: ", "onSuccess");
                     nickName = userProfile.getNickname();
 //                    String email = userProfile.getEmail();
-//                    String profileImagePath = userProfile.getProfileImagePath();
-//                    String thumnailPath = userProfile.getThumbnailImagePath();
+                    profileImagePath = userProfile.getProfileImagePath();
+                    thumnailPath = userProfile.getThumbnailImagePath();
 //                    String UUID = userProfile.getUUID();
                     id = userProfile.getId();
                     Log.e("Profile : ", nickName + "");
                     Log.e("Profile id : ", id + "");
+                    Log.e("url",profileImagePath);
                     redirectSignupActivity();
                     makeJson();
                 }
@@ -180,16 +178,12 @@ public class KakaoLoginActivity extends AppCompatActivity {
 
         }
     }
-    protected JSONObject makeJson(){
-        JSONObject jsonObject = new JSONObject();
-        try{
-            jsonObject.put("nickname",nickName);
-            jsonObject.put("id",id);
-            Log.e("json : ",jsonObject.toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return jsonObject;
+    protected void makeJson(){
+        jsonObject=new HashMap<>();
+        jsonObject.put("nickname",nickName);
+        jsonObject.put("id",id);
+        jsonObject.put("profileimage",thumnailPath);
+        Log.e("json : ",jsonObject.toString());
     }
 
 

@@ -11,33 +11,64 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/ㅄ"
-        android:id="@+id/text"/>
+        android:text="2018-11-7"
+        android:layout_margin="8dp"
+        android:layout_gravity="center"
+        android:id="@+id/date"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"/>
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/w1"
+            android:id="@+id/weather"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="아주좋아용"
+            android:layout_marginLeft="8dp"
+            android:gravity="center"
+            android:id="@+id/feel"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"/>
+
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/main_text"
+        android:padding="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9"
+        android:background="@drawable/diarybackground"
+        android:lineSpacingExtra="25dp"
+        android:text="일기내용와라라라라라라랄라ㅏㄹ랄알겟습니까fffffffffffffffffffffffffffffffffff"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:text="이전"
+            android:id="@+id/back_btn"
+            android:background="@drawable/btn_bg"
+            android:layout_height="wrap_content" />
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:text="다음"
             android:layout_height="wrap_content"
-            android:id="@+id/diary_date" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/diary"/>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/sender"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/receiver"/>
-        </LinearLayout>
+            android:id="@+id/next_btn"
+            android:background="@drawable/btn_bg"/>
     </LinearLayout>
-
 </LinearLayout>
